@@ -1,0 +1,31 @@
+<section class="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-dark via-primary to-accent text-white px-4">
+  <div class="text-center max-w-lg w-full">
+    <h1 class="text-5xl font-extrabold mb-4 tracking-tight">
+       Quiz IA Interactivo
+    </h1>
+    <p class="text-lg mb-8 text-white/80">
+      Aprende y reta la inteligencia artificial. Ingresa un tema y genera un quiz inteligente.
+    </p>
+
+    <div class="bg-white/10 backdrop-blur-lg rounded-2xl p-6 shadow-xl flex flex-col gap-4">
+      <input
+        [(ngModel)]="topic"
+        type="text"
+        placeholder="Ej. Programación en Java"
+        class="p-3 rounded-lg bg-white/20 text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-accent"
+      />
+
+      <button
+        (click)="startQuiz()"
+        [disabled]="!topic"
+        class="py-3 px-6 rounded-lg bg-accent text-dark font-bold hover:bg-yellow-400 transition-all disabled:opacity-50"
+      >
+        Comenzar Quiz
+      </button>
+    </div>
+  </div>
+
+  <footer class="absolute bottom-5 text-sm text-white/70">
+    Desarrollado por <span class="font-semibold text-white">ErhC Dev</span>
+  </footer>
+</section>

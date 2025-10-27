@@ -1,0 +1,79 @@
+<section class="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-indigo-900 via-purple-800 to-indigo-700 text-white p-6">
+  <!-- Loader -->
+  <div *ngIf="loading" class="text-2xl font-semibold animate-pulse">🌀 Cargando tu quiz...</div>
+
+  <!-- Contenido principal -->
+  <div *ngIf="!loading && !showResult && questions.length"
+       class="w-full max-w-2xl bg-white/10 backdrop-blur-md p-8 rounded-3xl shadow-2xl border border-white/20 relative overflow-hidden">
+
+    <!-- Barra de progreso (temporizador) -->
+    <div class="w-full h-4 bg-white/20 rounded-full mb-6 overflow-hidden">
+      <div
+        [style.width.%]="(timeLeft / 20) * 100"
+        [ngClass]="{
+          'bg-green-400': timeLeft > 10,
+          'bg-yellow-400': timeLeft <= 10 && timeLeft > 5,
+          'bg-red-500': timeLeft <= 5
+        }"
+        class="h-full transition-all duration-300 ease-linear">
+      </div>
+    </div>
+
+    <!-- Pregunta -->
+    <h2 class="text-3xl font-bold mb-8 text-yellow-300 drop-shadow-lg">
+      {{ questions[currentIndex].pregunta }}
+    </h2>
+
+    <!-- Opciones -->
+    <div class="grid gap-4">
+      <button
+        *ngFor="let opcion of questions[currentIndex].opciones"
+        (click)="answerQuestion(opcion)"
+        [disabled]="isAnswered"
+        [ngClass]="{
+          'bg-green-500': isAnswered && opcion.trim().charAt(0) === questions[currentIndex].respuesta_correcta,
+          'bg-red-500': isAnswered && selectedOption === opcion && opcion.trim().charAt(0) !== questions[currentIndex].respuesta_correcta,
+          'bg-white/10 hover:bg-white/20': !isAnswered,
+          'cursor-not-allowed opacity-80': isAnswered
+        }"
+        class="text-lg font-semibold px-6 py-4 rounded-2xl shadow-md transition-all duration-300 ease-out transform hover:scale-105">
+        {{ opcion }}
+      </button>
+    </div>
+
+    <!-- Feedback -->
+    <div *ngIf="feedback" class="mt-6 text-xl font-bold"
+         [ngClass]="{
+           'text-green-400': feedback.includes('Correcto'),
+           'text-red-400': feedback.includes('Incorrecto'),
+           'text-yellow-300': feedback.includes('tiempo')
+         }">
+      {{ feedback }}
+    </div>
+
+    <!-- Botón siguiente -->
+    <div class="mt-8 flex justify-center">
+      <button *ngIf="showNextButton"
+              (click)="nextQuestion()"
+              class="bg-gradient-to-r from-yellow-400 to-orange-400 text-black font-bold px-8 py-3 rounded-full hover:scale-105 transition-all shadow-lg">
+        ➡️ Siguiente pregunta
+      </button>
+    </div>
+
+    <!-- Contador de progreso -->
+    <p class="mt-6 text-sm text-white/70">
+      Pregunta {{ currentIndex + 1 }} de {{ questions.length }}
+    </p>
+  </div>
+
+  <!-- Resultado final -->
+  <div *ngIf="showResult"
+       class="max-w-md text-center bg-white/10 p-8 rounded-3xl backdrop-blur-md shadow-xl border border-white/20 animate-fadeIn">
+    <h2 class="text-4xl font-bold text-yellow-300 mb-4 drop-shadow-lg">🎉 ¡Resultado!</h2>
+    <p class="text-lg mb-8">Tu puntaje: <span class="font-bold text-white">{{ score }}</span> / {{ questions.length }}</p>
+    <a routerLink="/"
+       class="bg-gradient-to-r from-yellow-400 to-orange-400 text-black px-8 py-3 rounded-full font-bold hover:scale-105 transition-all shadow-lg">
+      🔁 Volver al inicio
+    </a>
+  </div>
+</section>
