@@ -1,14 +1,15 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
+import {environment} from "../../../../environments/environment.prod";
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class QuizService {
 
-  // private baseUrl = 'https://quizia-dveu.onrender.com/api/quiz';
-  private baseUrl = 'http://localhost:8080/api/quiz';
+  private baseUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) { }
 
