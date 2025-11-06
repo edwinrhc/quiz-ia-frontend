@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
-import {environment} from "../../../../environments/environment";
+import {environment} from "../../../../environments/environment.prod";
 import {QuestionView} from "../../pages/quiz/quiz.model";
 
 
@@ -11,8 +11,8 @@ import {QuestionView} from "../../pages/quiz/quiz.model";
 })
 export class QuizService {
 
-  // private baseUrl = environment.apiUrl;
   private baseUrl = environment.apiUrl;
+  // private baseUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) { }
 
