@@ -21,23 +21,24 @@
 
     <!-- Pregunta -->
     <h2 class="text-3xl font-bold mb-8 text-yellow-300 drop-shadow-lg">
-      {{ questions[currentIndex].pregunta }}
+      {{ questions[currentIndex]?.pregunta }}
     </h2>
 
     <!-- Opciones -->
     <div class="grid gap-4">
       <button
-        *ngFor="let opcion of questions[currentIndex].opciones"
-        (click)="answerQuestion(opcion)"
+        *ngFor="let opcion of questions[currentIndex]?.opciones; let j = index"
+        (click)="selectOption(j)"
         [disabled]="isAnswered"
         [ngClass]="{
-          'bg-green-500': isAnswered && opcion.trim().charAt(0) === questions[currentIndex].respuesta_correcta,
-          'bg-red-500': isAnswered && selectedOption === opcion && opcion.trim().charAt(0) !== questions[currentIndex].respuesta_correcta,
-          'bg-white/10 hover:bg-white/20': !isAnswered,
-          'cursor-not-allowed opacity-80': isAnswered
-        }"
-        class="text-lg font-semibold px-6 py-4 rounded-2xl shadow-md transition-all duration-300 ease-out transform hover:scale-105">
-        {{ opcion }}
+      'bg-green-500': isAnswered && j === questions[currentIndex]?.correctIndex,
+      'bg-red-500': isAnswered && selections[currentIndex] === j && j !== questions[currentIndex]?.correctIndex,
+      'bg-white/10 hover:bg-white/20': !isAnswered,
+      'cursor-not-allowed opacity-80': isAnswered
+    }"
+        class="text-lg font-semibold px-6 py-4 rounded-2xl shadow-md transition-all duration-300 ease-out transform hover:scale-105"
+      >
+        <strong>{{ letters[j] }}.</strong> {{ opcion }}
       </button>
     </div>
 
